@@ -1,0 +1,34 @@
+CentOS 7上yum安装的Haproxy，默认没有记录日志。需要做一下配置才能记录日志。（不知道其他版本是否需要，已经忘记了）主要是用到了Haproxy，以前貌似没有这么麻烦，今天配置出了一些问题查日志才发现原来Haproxy需要自己手工开启日志记录功能。因此作为相关记录！
+1. 创建记录日志文件
+mkdir /var/log/haproxy
+chmod a+w /var/log/haproxy
+
+2. 开启rsyslog记录haproxy日志功能
+编辑“/etc/rsyslog.conf”打开如下配置项：
+
+# Provides UDP syslog reception
+$ModLoad imudp
+$UDPServerRun 514
+
+添加如下内容：
+# Save haproxy log
+local0.*                       /var/log/haproxy/haproxy.log
+
+3. 修改“/etc/sysconfig/rsyslog”文件，内容如下
+# Options for rsyslogd
+# Syslogd options are deprecated since rsyslog v3.
+# If you want to use them, switch to compatibility mode 2 by "-c 2"
+# See rsyslogd(8) for more details
+SYSLOGD_OPTIONS="-r -m 0 -c 2"
+
+4. 配置haproxy
+编辑haproxy配置文件，进行如下内容修改
+log 127.0.0.1 local0 info
+
+5. 验证是否生效
+###重启服务
+systemctl restart haproxy
+service rsyslog restart
+
+###查看日志记录
+tailf /var/log/haproxy/haproxy.log
