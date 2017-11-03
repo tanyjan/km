@@ -1,5 +1,6 @@
 package com.test.func;
 
+import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -14,6 +15,7 @@ import com.test.schd.consume.Consume;
 import com.test.schd.init.InitializeXpathRedisTask;
 import com.test.schd.init.StartService;
 import com.test.schd.prod.GetXpathFromRedisTask;
+import com.test.schd.prod.GetXpathFromRedisTaskNMQ;
 
 @Service
 @PropertySource(value = { "classpath:application.properties" })
@@ -25,14 +27,16 @@ public class TestAnonService {
 //	private static int counts = 1;
 
 
-//	@Autowired
-//	private AmqpAdmin admin;
+	@Autowired
+	private AmqpAdmin admin;
 //	@Autowired
 //	private RabbitTemplate template;
 	@Autowired
 	private InitializeXpathRedisTask initTask;
 	@Autowired
-	private GetXpathFromRedisTask getTask;
+	private GetXpathFromRedisTaskNMQ getTask;
+	@Autowired
+	private GetXpathFromRedisTask getTask0;
 	@Autowired
 	private Consume consumefromMQ;
 
@@ -42,7 +46,7 @@ public class TestAnonService {
 		initTask.init();
 		initTask.StartRun();
 
-		this.run(getTask);
+		this.run(getTask0);
 		this.run(consumefromMQ);
 
 		/*ExecutorService service = Executors.newFixedThreadPool(2);

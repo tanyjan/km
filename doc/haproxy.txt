@@ -51,11 +51,11 @@ stats hide-version #隐藏统计页面上HAProxy的版本信息
 stats admin if TRUE #设置手工启动/禁用，后端服务器(haproxy-1.4.9以后版本)
 
 ########设置haproxy 错误页面#####
-#errorfile 403 /home/haproxy/haproxy/errorfiles/403.http
-#errorfile 500 /home/haproxy/haproxy/errorfiles/500.http
-#errorfile 502 /home/haproxy/haproxy/errorfiles/502.http
-#errorfile 503 /home/haproxy/haproxy/errorfiles/503.http
-#errorfile 504 /home/haproxy/haproxy/errorfiles/504.http
+#errorfile 403 /home/haproxy/haproxy/403.http
+#errorfile 500 /home/haproxy/haproxy/500.http
+#errorfile 502 /home/haproxy/haproxy/502.http
+#errorfile 503 /home/haproxy/haproxy/503.http
+#errorfile 504 /home/haproxy/haproxy/504.http
 
 ########frontend前端配置##############
 frontend main
